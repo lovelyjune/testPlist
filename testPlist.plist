@@ -17,13 +17,13 @@
                 <key>metadata</key>
                 <dict>
                     <key>bundle-identifier</key>
-                    <string>com.Pyw.PywApp</string>
+                    <string>com.m7game.JunChess.pyw</string>
                     <key>bundle-version</key>
                     <string>1.0</string>
                     <key>kind</key>
                     <string>software</string>
                     <key>title</key>
-                    <string>朋友玩</string>
+                    <string>超级四国军棋</string>
                 </dict>
             </dict>
         </array>
