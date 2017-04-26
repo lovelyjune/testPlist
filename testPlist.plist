@@ -11,19 +11,19 @@
                         <key>kind</key>
                         <string>software-package</string>
                         <key>url</key>
-                        <string>http://127.0.0.1:10001/JunChess.ipa</string>
+                        <string>http://127.0.0.1:10001/cqb.ipa</string>
                     </dict>
                 </array>
                 <key>metadata</key>
                 <dict>
                     <key>bundle-identifier</key>
-                    <string>com.m7game.JunChess.pyw</string>
+                    <string>com.idreamsky.cqb.pyw</string>
                     <key>bundle-version</key>
-                    <string>1.0</string>
+                    <string>4.5.6</string>
                     <key>kind</key>
                     <string>software</string>
                     <key>title</key>
-                    <string>超级四国军棋</string>
+                    <string>斗苍穹</string>
                 </dict>
             </dict>
         </array>
