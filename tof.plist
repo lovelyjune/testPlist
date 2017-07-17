@@ -17,7 +17,7 @@
                 <key>metadata</key>
                 <dict>
                     <key>bundle-identifier</key>
-                    <string>com.tof.tof</string>
+                    <string>com.test.test</string>
                     <key>bundle-version</key>
                     <string>4.5.6</string>
                     <key>kind</key>
