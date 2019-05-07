@@ -32,6 +32,36 @@ SDK有三个头文件，分别有以下用途
 ##### - LovenseToy.h
 1. 玩具类，记录玩具所有属性（如玩具名称，玩具类型等）
 
+```objective-c
+///name
+@property(nonatomic,copy)NSString * name;
+
+///Toy Identifier
+@property(nonatomic,copy)NSString * identifier;
+
+///Toy type - Nora/Max/Lush/Hush/Ambi/Osci/Edge/Domi
+///这个一定要连接玩具后才有值
+@property(nonatomic,copy)NSString * toyType;
+
+//version
+@property(nonatomic,copy)NSString * version;
+
+//mac地址
+@property(nonatomic,copy)NSString * macAddress;
+
+///是否被蓝牙发现
+@property(nonatomic,assign)BOOL isFound;
+
+///Toy connection status
+@property(nonatomic,assign)BOOL isConnected;
+
+///Signal strength of the Bluetooth connection
+@property(nonatomic,assign)int rssi;
+
+///Battery status
+@property(nonatomic,assign)int battery;
+```
+
 ##### - LovenseBluetoothManager.h
 1. 主要控制玩具的实现类（如扫描玩具，连接玩具，发送命令到玩具等）
 
