@@ -38,8 +38,8 @@ SDK有三个头文件，分别有以下用途
 
 ------------
 
+### - ** 如何使用SDK**
 
-#### 1.2.0  如何使用SDK
 
 - 导入 LovenseBluetoothManager 
 
@@ -48,528 +48,186 @@ SDK有三个头文件，分别有以下用途
 
 ```
 
--  扫描玩具 并 自动连接
+-   Pass your token into Lovense framework
+
+```objective-c
+    [[LovenseBluetoothManager shared] setDeveloperToken:@"Your token"];
+```
+
+
+-  Search the toys over Bluetooth
 
 ```objective-c
     [[LovenseBluetoothManager shared] searchToysWithIsAutoConnect:YES];
 
 ```
 
-- 监听玩具连接
+-  Save the toys
 
 ```objective-c
--(void)viewWillAppear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scanSuccessCallback:) name:kToyScanSuccessNotification object:nil];     //扫描玩具成功通知监听
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectSuccessCallback:) name:kToyConnectSuccessNotification object:nil];     //连接玩具成功
-}
+    [[LovenseBluetoothManager shared] saveToyList:self.allToyModelArr];
 ```
 
-- 玩具连接成功回调
+-  Retrieve the saved toys
 
 ```objective-c
-//扫描成功回调
--(void)scanSuccessCallback:(NSNotification *)noti
-{
-    NSDictionary * dict = [noti object];
-    NSArray<LovenseToy * > * scanToyArr = [dict objectForKey:@"scanToyArray"];
-}
+        NSArray<LovenseToy*> * toyList = [[LovenseBluetoothManager shared] getSavedToyList];
 
-//连接成功回调
--(void)connectSuccessCallback:(NSNotification *)noti
-{
-
-}
 ```
 
-- 控制玩具震动
+-   Connect the toy
 
 ```objective-c
-NSMutableDictionary * paramDict = [NSMutableDictionary dictionary];
-[paramDict setObject:@(20) forKey:kSendOrderParamKey_VibrateLevel];
+        [[LovenseBluetoothManager shared] connectToy:self.currentToy.identifier];
 
-[[LovenseBluetoothManager shared] sendOrderWithToyId:toy.identifier andOrderType:OrderTypeVibrate andParamDict:paramDict ];
 ```
+
+
+-   Disconnect the  toy
+
+```objective-c
+         [[LovenseBluetoothManager shared] disconnectToy:self.currentToy.identifier];
+
+```
+
 
 ------------
 
-#### 1.3.0 详细命令说明
 
-```objective-c
-/**
-     - Vibrate the toy .The parameter must be between 0 and 20!
-     - param Key = kSendOrderParamKey_VibrateLevel
-     - Supported toys = all
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeVibrate = 101,
+### - ** Send command to the toy**
 
-    /**
-     - Rotate the toy .The parameter must be between 0 and 20!
-     - param Key = kSendOrderParamKey_RotateLevel
-     - Supported toys = Nora
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeRotate = 102,
+`OrderTypeVibrate`
+`-Vibrate the toy .The parameter must be between 0 and 20!`
 
-    /**
-     - Rotate clockwise .The parameter must be between 0 and 20!
-     - param Key = kSendOrderParamKey_RotateLevel
-     - Supported toys = Nora
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeRotateClockwise = 103,
+`OrderTypeRotate`
+`-Rotate the toy .The parameter must be between 0 and 20!`
 
-    /**
-     - Rotate anti-clockwise .The parameter must be between 0 and 20!
-     - param Key = kSendOrderParamKey_RotateLevel
-     - Supported toys = Nora
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeRotateAntiClockwise = 104,
+`OrderTypeRotateClockwise`
+`-Rotate clockwise .The parameter must be between 0 and 20!`
 
-    /**
-     - Change the rotation direction
-     - param Key = no parameter
-     - Supported toys = Nora
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeRotateChange = 105,
+`OrderTypeRotateAntiClockwise`
+`-Rotate anti-clockwise .The parameter must be between 0 and 20!`
 
-    /**
-     - Pump in air .The parameter can be 1,2 or 3
-     - param Key = kSendOrderParamKey_AirLevel
-     - Supported toys = Max
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeAirIn =  110,
+`OrderTypeRotateChange`
+`-Change the rotation direction`
 
-    /**
-     - Release the air .The parameter can be 1,2 or 3
-     - param Key = kSendOrderParamKey_AirLevel
-     - Supported toys = Max
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeAirOut = 111,
+`OrderTypeAirIn`
+`-Pump in air .The parameter can be 1,2 or 3`
 
-    /**
-     - 循环充气n秒，放气n秒，0代表停止
-     - Start contraction. The parameter can be 1,2 or 3 ; 0 = stop
-     - param Key = kSendOrderParamKey_AirAutoSec
-     - Supported toys = Max
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeAirAuto = 112,
+`OrderTypeAirOut`
+`-Release the air .The parameter can be 1,2 or 3`
 
-    /**
-     - 第一个震动马达以n档位震动
-     - param Key = kSendOrderParamKey_VibrateLevel
-     - Supported toys = Edge
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeVibrate1 = 113,
+`OrderTypeAirAuto`
+`-循环充气n秒，放气n秒，0代表停止`
 
-    /**
-     - 第二个震动马达以n档位震动
-     - param Key = kSendOrderParamKey_VibrateLevel
-     - Supported toys = Edge
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeVibrate2 = 114,
+`OrderTypeVibrate1`
+`-第一个震动马达以n档位震动`
 
-    /**
-     - 以某个档位震动，并且按指定频率闪灯
-     - param key = kSendOrderParamKey_VibrateLevel: 为震动级别，取值范围为1，2，3
-     - param key = kSendOrderParamKey_FlashLevel: 为闪灯频率（每秒闪灯次数），取值范围为0~9
-     - Supported toys = Ambi / Domi / Osci
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeVibrateAndFlash = 120,
+`OrderTypeVibrate2`
+`-第二个震动马达以n档位震动`
 
-    /**
-     - 设置按第一下按钮的震动级别的强度.The parameter must be between 0 and 20!
-     - param Key = kSendOrderParamKey_VibrateLevel
-     - Supported toys = Ambi / Domi / Osci
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeSetButtonClickOneLevel = 131,
+`OrderTypeVibrateAndFlash`
+`-以某个档位震动，并且按指定频率闪灯`
 
-    /**
-     - 设置按第二下按钮的震动级别的强度.The parameter must be between 0 and 20!
-     - param Key = kSendOrderParamKey_VibrateLevel
-     - Supported toys = Ambi / Domi / Osci
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeSetButtonClickTwoLevel = 132,
+`OrderTypeSetButtonClickOneLevel`
+`-设置按第一下按钮的震动级别的强度.The parameter must be between 0 and 20!`
 
-    /**
-     - 设置按第三下按钮的震动级别的强度.The parameter must be between 0 and 20!
-     - param Key = kSendOrderParamKey_VibrateLevel
-     - Supported toys = Ambi / Domi / Osci
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeSetButtonClickThreeLevel = 133,
+`OrderTypeSetButtonClickTwoLevel`
+`-设置按第二下按钮的震动级别的强度.The parameter must be between 0 and 20!`
 
-    /**
-     - 返回前三个按钮的震动强度
-     - param Key = no parameter
-     - Supported toys = Ambi / Domi / Osci
-     - return notification = kToyCallbackNotificationGetFirstThreeButtonLevel
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"buttonOneLevel":NSString,
-     @"buttonTwoLevel":NSString,
-     @"buttonThreeLevel":NSString
-     }
-     */
-    OrderTypeGetFirstThreeButtonLevel = 140,
+`OrderTypeSetButtonClickThreeLevel`
+`-设置按第三下按钮的震动级别的强度.The parameter must be between 0 and 20!`
 
-    /**
-     - 指示灯快速闪三下，然后恢复到之前状态
-     - param Key = no parameter
-     - Supported toys = all
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeFlash = 201,
+`OrderTypeGetFirstThreeButtonLevel`
+`-返回前三个按钮的震动强度`
 
-    /**
-     - 关闭指示灯，掉电保存
-     - param Key = no parameter
-     - Supported toys = Lush / Hush / Edge
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeLightOff = 210,
+`OrderTypeFlash`
+`-指示灯快速闪三下，然后恢复到之前状态`
 
-    /**
-     - 打开指示灯，掉电保存
-     - param Key = no parameter
-     - Supported toys = Lush / Hush / Edge
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeLightOn = 211,
+`OrderTypeLightOff`
+`-关闭指示灯，掉电保存`
 
-    /**
-     获取指示灯状态 1：开；0：关。
-     - param Key = no parameter
-     * Supported toys = Lush  Hush  Edge
-     - return notification "kToyCallbackNotificationGetLightStatus"
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"isOpen":NSString
-     }
-     */
-    OrderTypeGetLightStatus = 212,
+`OrderTypeLightOn`
+`-打开指示灯，掉电保存`
 
-    /**
-     - 关闭辅助灯,掉电保存
-     - param Key = no parameter
-     - Supported toys = Domi
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeAidLightOff = 220,
+`OrderTypeGetLightStatus`
+`-获取指示灯状态 1：开；0：关。`
 
-    /**
-     - 打开辅助灯,掉电保存
-     - param Key = no parameter
-     - Supported toys = Domi
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeAidLightOn = 221,
+`OrderTypeAidLightOff`
+`-关闭辅助灯,掉电保存`
 
-    /**
-     获取辅助灯状态 1：开；0：关。
-     - param Key = no parameter
-     * Supported toys = Domi
-     - return notification "kToyCallbackNotificationGetAidLightStatus"
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"isOpen":NSString
-     }
-     */
-    OrderTypeGetAidLightStatus = 222,
+`OrderTypeAidLightOn`
+`-打开辅助灯,掉电保存`
 
-    /**
-     - Get battery status,
-     - param Key = no parameter
-     * Supported toys = all
-     - return notification "kToyCallbackNotificationBattery"
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"battery":NSString}
-     */
-    OrderTypeBattery = 300,
+`OrderTypeGetAidLightStatus`
+`-获取辅助灯状态 1：开；0：关。`
 
-    /**
-     Get device information
-     - 获取设备信息，版本，类型
-     - param Key = no parameter
-     * Supported toys = all
-     - return notification "kToyCallbackNotificationDeviceType"
-      [notification object] = @{@"receiveToy":LovenseToy,
-      @"receiveToyUUID":NSString,
-      @"type":NSString,
-      @"version":NSString,
-      @"macAddress":NSString
-      }
-     */
-    OrderTypeDeviceType = 310,
+`OrderTypeBattery`
+`-Get battery status`
 
-    /**
-     开始监听震动广播 ,震动回调 0-4
-     - param Key = no parameter
-     * Supported toys = Max,Nora
-     - return notification "kToyCallbackNotificationListenMove"
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"moveLevel":NSString
-     }
-     */
-    OrderTypeStartListenMove = 400,
+`OrderTypeDeviceType`
+`-Get device information`
 
-    /**
-     结束监听震动广播，震动回调 0-4
-     - param Key = no parameter
-     * Supported toys = Max,Nora
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeStopListenMove = 401,
 
-    /**
-     保存编程
-     - param Key = kSendOrderParamKey_ProgramButton : 0-10 就是玩具每按一下按钮，channel就加1
-     - param Key = kSendOrderParamKey_ProgramContent : 传入一个数组，按数组的内容进行编程，数组最多长度是500，名字执行完成后会重复执行
-     - 支持最多500个震动数值，旧版玩具由于硬件问题，敏感度比新版玩具低
-     * Supported toys = Ambi, Domi, Osci
-     - return notification = kToyOrderCallbackNotificationAtSuccess
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"orderType":NSString
-     }
-     */
-    OrderTypeSaveProgram = 500,
+`OrderTypeStartListenMove`
+`-开始监听震动广播 ,震动回调 0-4`
 
-    /**
-     获取所有已存在的编程按钮序号
-     * Supported toys = Ambi, Domi, Osci
-     - return notification = kToyCallbackNotificationGetAllExistedProgramButton
-     - return object = "kToyCallbackNotificationGetAllExistedProgramButton"
-     [notification object] = @{@"receiveToy":LovenseToy,
-     @"receiveToyUUID":NSString,
-     @"allExistedString":NSString
-     }
-     ***/
-    OrderTypeGetAllExistedProgramButton = 501
-```
+`OrderTypeStopListenMove`
+`-结束监听震动广播，震动回调 0-4`
+
+`OrderTypeSaveProgram`
+`-保存编程`
+
+`OrderTypeGetAllExistedProgramButton`
+`-获取所有已存在的编程按钮序号`
+
+
 
 ------------
 
-#### 1.3.1 参数key
 
-```objective-c
-#define kSendOrderParamKey_VibrateLevel @"VibrateLevel" //震动参数key 0-20
-#define kSendOrderParamKey_RotateLevel @"RotateLevel"   //旋转参数key 0-20
-#define kSendOrderParamKey_AirLevel @"AirLevel"     //The parameter can be 1,2 or 3
-#define kSendOrderParamKey_AirAutoSec @"AirAutoSec" //The parameter can be 0,1,2 or 3 ; 0 = stop
-#define kSendOrderParamKey_FlashLevel @"FlashLevel" //闪灯参数key 0-9
-#define kSendOrderParamKey_ProgramButton @"ProgramButton" //0-10 就是玩具每按一下按钮，channel就加1
-#define kSendOrderParamKey_ProgramContent @"ProgramContent" //传入一个数组，按数组的内容进行编程，数组最多长度是100
-```
+### - ** Callback**
 
-#### 1.3.2 回调
-```objective-c
-**
- 扫描到玩具成功回调
- 通知回调参数object = @{@"scanToyArray":<LovenseToy*>NSArray*}
- **/
-#define kToyScanSuccessNotification @"kToyScanSuccessNotification"
+`kToyScanSuccessNotification`
+`-扫描到玩具成功回调`
 
-/**
- 连接玩具成功回调
- 通知回调参数object = @{@"toy":LovenseToy}
- **/
-#define kToyConnectSuccessNotification @"kToyConnectSuccessNotification"
+`kToyConnectSuccessNotification`
+`-连接玩具成功回调`
 
-/**
- 连接玩具失败回调
- 通知回调参数object = @{@"toy":LovenseToy,@"error":NSString}
- **/
-#define kToyConnectFailNotification @"kToyConnectFailNotification"
+`kToyConnectFailNotification`
+`-连接玩具失败回调`
 
-/**
- 断开玩具回调
- 通知回调参数object = @{@"toy":LovenseToy,@"error":NSError}
- **/
-#define kToyConnectBreakNotification @"kToyConnectBreakNotification"
+`kToyConnectBreakNotification`
+`-断开玩具回调`
 
-/**
- 发送指令错误通知
- 通知回调参数object = @{@"errorDesc":NSString}
- **/
-#define kToySendOrderErrorNotification @"kToySendOrderErrorNotification"
+`kToySendOrderErrorNotification`
+`-发送指令错误通知`
 
-/**
- 命令成功回调
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"orderType":NSString
- }
- **/
-#define kToyOrderCallbackNotificationAtSuccess @"kToyOrderCallbackNotificationAtSuccess"
+`kToyCallbackNotificationBattery`
+`-电量回调`
 
-/**
- 命令错误回调
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"orderType":NSString
- }
- **/
-#define kToyOrderCallbackNotificationAtError @"kToyOrderCallbackNotificationAtError"
+`kToyCallbackNotificationDeviceType`
+`-设备信息回调`
 
-/**
- 电量回调
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"battery":NSString}
- **/
-#define kToyCallbackNotificationBattery @"kToyCallbackNotificationBattery"
+`kToyCallbackNotificationGetLightStatus`
+`-指示灯是否开启`
 
-/**
- 设备信息回调
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"type":NSString,
- @"version":NSString,
- @"macAddress":NSString
- }
- **/
-#define kToyCallbackNotificationDeviceType @"kToyCallbackNotificationDeviceType"
+`kToyCallbackNotificationGetAidLightStatus`
+`-辅助灯是否开启`
 
-/**
- 指示灯是否开启
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"isOpen":NSString
- }
- **/
-#define kToyCallbackNotificationGetLightStatus @"kToyCallbackNotificationGetLightStatus"
+`kToyCallbackNotificationGetFirstThreeButtonLevel`
+`-返回前三个按钮的震动强度`
 
-/**
- 辅助灯是否开启
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"isOpen":NSString
- }
- **/
-#define kToyCallbackNotificationGetAidLightStatus @"kToyCallbackNotificationGetAidLightStatus"
+`kToyCallbackNotificationListenMove`
+`-监听震动广播`
 
-/**
- 返回前三个按钮的震动强度
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"buttonOneLevel":NSString,
- @"buttonTwoLevel":NSString,
- @"buttonThreeLevel":NSString
- }
- **/
-#define kToyCallbackNotificationGetFirstThreeButtonLevel @"kToyCallbackNotificationGetFirstThreeButtonLevel"
+`kToyCallbackNotificationGetAllExistedProgramButton`
+`- 获取所有已存在的编程按钮序号`
 
-/**
- 监听震动广播
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"moveLevel":NSString
- }
- **/
-#define kToyCallbackNotificationListenMove @"kToyCallbackNotificationListenMove"
+`kToyOrderCallbackNotificationAtSuccess`
+`-命令成功回调`
 
-/**
- 获取所有已存在的编程按钮序号
- 通知回调参数object = @{@"receiveToy":LovenseToy,
- @"receiveToyUUID":NSString,
- @"allExistedString":NSString
- }
- **/
-#define kToyCallbackNotificationGetAllExistedProgramButton @"kToyCallbackNotificationGetAllExistedProgramButton"
 
-```
+`kToyOrderCallbackNotificationAtError`
+`-命令错误回调`
+
