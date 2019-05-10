@@ -108,7 +108,7 @@ SDK有三个头文件，分别有以下用途
 -   Connect the toy
 
 ```objective-c
-        [[LovenseBluetoothManager shared] connectToy:self.currentToy.identifier];
+   [[LovenseBluetoothManager shared] connectToy:self.currentToy.identifier];
 
 ```
 
@@ -116,7 +116,16 @@ SDK有三个头文件，分别有以下用途
 -   Disconnect the  toy
 
 ```objective-c
-         [[LovenseBluetoothManager shared] disconnectToy:self.currentToy.identifier];
+     [[LovenseBluetoothManager shared] disconnectToy:self.currentToy.identifier];
+
+```
+
+-   send command to  toy
+
+```objective-c
+     NSMutableDictionary * paramDict = [NSMutableDictionary dictionary];
+    [paramDict setObject:@(value) forKey:kSendOrderParamKey_VibrateLevel];
+    [[LovenseBluetoothManager shared] sendOrderWithToyId:toy.identifier andOrderType:OrderTypeVibrate andParamDict:paramDict ];
 
 ```
 
