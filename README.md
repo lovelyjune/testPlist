@@ -85,7 +85,7 @@ SDK有三个头文件，分别有以下用途
 
 -  add scan success notification
 ```objective-c
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scanSuccessCallback:) name:kToyScanSuccessNotification object:nil];     //Scanning toy success notification
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scanSuccessCallback:) name:kToyScanSuccessNotification object:nil];     //Scanning toy success notification
 -(void)scanSuccessCallback:(NSNotification *)noti
 {
     NSDictionary * dict = [noti object];
@@ -95,7 +95,7 @@ SDK有三个头文件，分别有以下用途
 
 -  add connect success notification
 ```objective-c
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectSuccessCallback:) name:kToyConnectSuccessNotification object:nil];     //Connected toy successfully notification
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectSuccessCallback:) name:kToyConnectSuccessNotification object:nil];     //Connected toy successfully notification
 -(void)connectSuccessCallback:(NSNotification *)noti
 {
     NSDictionary * dict = [noti object];
