@@ -75,7 +75,6 @@ SDK有三个头文件，分别有以下用途
 
 ```objective-c
 #import <LovenseBluetoothSDK/LovenseBluetoothManager.h>
-
 ```
 
 -   Pass your token into Lovense framework
@@ -89,6 +88,39 @@ SDK有三个头文件，分别有以下用途
 
 ```objective-c
     [[LovenseBluetoothManager shared] searchToysWithIsAutoConnect:YES];
+
+```
+
+ Example
+```
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [[LovenseBluetoothManager shared] searchToysWithIsAutoConnect:NO];
+}
+
+	-(void)viewWillAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scanSuccessCallback:) name:kToyScanSuccessNotification object:nil];     //Scanning toy success notification
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectSuccessCallback:) name:kToyConnectSuccessNotification object:nil];     //Connected toy successfully notification
+}
+
+#pragma mark - Callback
+//scanSuccess
+-(void)scanSuccessCallback:(NSNotification *)noti
+{
+    NSDictionary * dict = [noti object];
+    NSArray <LovenseToy*> * scanToyArr = [dict objectForKey:@"scanToyArray"];
+}
+
+//connectSuccess
+-(void)connectSuccessCallback:(NSNotification *)noti
+{
+    NSDictionary * dict = [noti object];
+    LovenseToy * toy = [dict objectForKey:@"toy"];
+    NSLog(@"%@",toy);
+}
 
 ```
 
@@ -108,7 +140,7 @@ SDK有三个头文件，分别有以下用途
 -   Connect the toy
 
 ```objective-c
-   [[LovenseBluetoothManager shared] connectToy:self.currentToy.identifier];
+        [[LovenseBluetoothManager shared] connectToy:self.currentToy.identifier];
 
 ```
 
@@ -116,16 +148,7 @@ SDK有三个头文件，分别有以下用途
 -   Disconnect the  toy
 
 ```objective-c
-     [[LovenseBluetoothManager shared] disconnectToy:self.currentToy.identifier];
-
-```
-
--   send command to  toy
-
-```objective-c
-     NSMutableDictionary * paramDict = [NSMutableDictionary dictionary];
-    [paramDict setObject:@(value) forKey:kSendOrderParamKey_VibrateLevel];
-    [[LovenseBluetoothManager shared] sendOrderWithToyId:toy.identifier andOrderType:OrderTypeVibrate andParamDict:paramDict ];
+         [[LovenseBluetoothManager shared] disconnectToy:self.currentToy.identifier];
 
 ```
 
