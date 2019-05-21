@@ -99,7 +99,7 @@ SDK有三个头文件，分别有以下用途
     [[LovenseBluetoothManager shared] searchToysWithIsAutoConnect:NO];
 }
 
-	-(void)viewWillAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scanSuccessCallback:) name:kToyScanSuccessNotification object:nil];     //Scanning toy success notification
 
