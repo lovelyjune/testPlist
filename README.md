@@ -83,46 +83,33 @@ SDK有三个头文件，分别有以下用途
     [[LovenseBluetoothManager shared] setDeveloperToken:@"Your token"];
 ```
 
-
--  Search the toys over Bluetooth
-
+-  add scan success notification
 ```objective-c
-    [[LovenseBluetoothManager shared] searchToysWithIsAutoConnect:YES];
-
-```
-
- Example
-```
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [[LovenseBluetoothManager shared] searchToysWithIsAutoConnect:NO];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scanSuccessCallback:) name:kToyScanSuccessNotification object:nil];     //Scanning toy success notification
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectSuccessCallback:) name:kToyConnectSuccessNotification object:nil];     //Connected toy successfully notification
-}
-
-#pragma mark - Callback
-//scanSuccess
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scanSuccessCallback:) name:kToyScanSuccessNotification object:nil];     //Scanning toy success notification
 -(void)scanSuccessCallback:(NSNotification *)noti
 {
     NSDictionary * dict = [noti object];
     NSArray <LovenseToy*> * scanToyArr = [dict objectForKey:@"scanToyArray"];
 }
+```
 
-//connectSuccess
+-  add connect success notification
+```objective-c
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectSuccessCallback:) name:kToyConnectSuccessNotification object:nil];     //Connected toy successfully notification
 -(void)connectSuccessCallback:(NSNotification *)noti
 {
     NSDictionary * dict = [noti object];
     LovenseToy * toy = [dict objectForKey:@"toy"];
     NSLog(@"%@",toy);
 }
-
 ```
+
+-  Search the toys over Bluetooth
+
+```objective-c
+    [[LovenseBluetoothManager shared] searchToysWithIsAutoConnect:YES];
+```
+
 
 -  Save the toys
 
