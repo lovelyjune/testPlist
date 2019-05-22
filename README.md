@@ -1,6 +1,4 @@
-## Lovense玩具蓝牙控制SDK对接文档 1.0
-`谁来阅读此文档：`
-`接入厂商产品的技术人员`
+## Lovense SDK for iOS 1.0
 
 
 ------------
@@ -20,55 +18,7 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 
 ------------
 
-
-#### 1.1.0  SDK简述
-
-SDK有三个头文件，分别有以下用途
-##### - LovenseBluetoothDefine.h
-1. 记录所有控制玩具命令的枚举（如震动指令OrderTypeVibrate）
-2. 记录所有命令参数的KEY（如震动参数kSendOrderParamKey_VibrateLevel）
-3. 记录所有命令回调（如扫描玩具成功回调kToyScanSuccessNotification）
-
-##### - LovenseToy.h
-1. 玩具类，记录玩具所有属性（如玩具名称，玩具类型等）
-
-```objective-c
-///name
-@property(nonatomic,copy)NSString * name;
-
-///Toy Identifier
-@property(nonatomic,copy)NSString * identifier;
-
-///Toy type - Nora/Max/Lush/Hush/Ambi/Osci/Edge/Domi
-///Once a toy connected, it will populated with a value
-@property(nonatomic,copy)NSString * toyType;
-
-//version
-@property(nonatomic,copy)NSString * version;
-
-//MAC address
-@property(nonatomic,copy)NSString * macAddress;
-
-///visibility to Bluetooth search
-@property(nonatomic,assign)BOOL isFound;
-
-///Toy connection status
-@property(nonatomic,assign)BOOL isConnected;
-
-///Signal strength of the Bluetooth connection
-@property(nonatomic,assign)int rssi;
-
-///Battery status
-@property(nonatomic,assign)int battery;
-```
-
-##### - LovenseBluetoothManager.h
-1. 主要控制玩具的实现类（如扫描玩具，连接玩具，发送命令到玩具等）
-
-
-------------
-
-### - ** 如何使用SDK**
+### - ** 4.Connect Lovense Toys**
 
 
 - 导入 LovenseBluetoothManager 
@@ -152,7 +102,7 @@ SDK有三个头文件，分别有以下用途
 ------------
 
 
-### - ** Send command to the toy**
+### - ** command list **
 
 `COMMAND_VIBRATE`
 `-Vibrate the toy .The parameter must be between 0 and 20!`
@@ -216,7 +166,7 @@ SDK有三个头文件，分别有以下用途
 ------------
 
 
-### - ** Callback**
+### - ** Notification list**
 
 `kToyScanSuccessNotification`
 `- Found toys`
@@ -256,4 +206,52 @@ SDK有三个头文件，分别有以下用途
 
 `kToyCommandCallbackNotificationAtError`
 `-Command Error`
+
+
+------------
+
+####  SDK简述
+
+SDK有三个头文件，分别有以下用途
+##### - LovenseBluetoothDefine.h
+1. 记录所有控制玩具命令的枚举（如震动指令OrderTypeVibrate）
+2. 记录所有命令参数的KEY（如震动参数kSendOrderParamKey_VibrateLevel）
+3. 记录所有命令回调（如扫描玩具成功回调kToyScanSuccessNotification）
+
+##### - LovenseToy.h
+1. 玩具类，记录玩具所有属性（如玩具名称，玩具类型等）
+
+```objective-c
+///name
+@property(nonatomic,copy)NSString * name;
+
+///Toy Identifier
+@property(nonatomic,copy)NSString * identifier;
+
+///Toy type - Nora/Max/Lush/Hush/Ambi/Osci/Edge/Domi
+///Once a toy connected, it will populated with a value
+@property(nonatomic,copy)NSString * toyType;
+
+//version
+@property(nonatomic,copy)NSString * version;
+
+//MAC address
+@property(nonatomic,copy)NSString * macAddress;
+
+///visibility to Bluetooth search
+@property(nonatomic,assign)BOOL isFound;
+
+///Toy connection status
+@property(nonatomic,assign)BOOL isConnected;
+
+///Signal strength of the Bluetooth connection
+@property(nonatomic,assign)int rssi;
+
+///Battery status
+@property(nonatomic,assign)int battery;
+```
+
+##### - LovenseBluetoothManager.h
+主要控制玩具的实现类（如扫描玩具，连接玩具，发送命令到玩具等）
+
 
