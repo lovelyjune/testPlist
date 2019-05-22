@@ -146,10 +146,10 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 `COMMAND_GET_ALIGHT_STATUS`
 `-Get the AID light status (1: on, 0:off)`
 
-`COMMAND_BATTERY`
+`COMMAND_GET_BATTERY`
 `-Get battery status`
 
-`COMMAND_DEVICE_TYPE`
+`COMMAND_GET_DEVICE_TYPE`
 `-Get device/toy information`
 
 `COMMAND_START_MOVE`
