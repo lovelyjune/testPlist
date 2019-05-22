@@ -40,16 +40,16 @@ SDK有三个头文件，分别有以下用途
 @property(nonatomic,copy)NSString * identifier;
 
 ///Toy type - Nora/Max/Lush/Hush/Ambi/Osci/Edge/Domi
-///这个一定要连接玩具后才有值
+///Once a toy connected, it will populated with a value
 @property(nonatomic,copy)NSString * toyType;
 
 //version
 @property(nonatomic,copy)NSString * version;
 
-//mac地址
+//MAC address
 @property(nonatomic,copy)NSString * macAddress;
 
-///是否被蓝牙发现
+///visibility to Bluetooth search
 @property(nonatomic,assign)BOOL isFound;
 
 ///Toy connection status
@@ -139,96 +139,77 @@ SDK有三个头文件，分别有以下用途
 
 ```
 
+-    Send a command to the toy
+
+```objective-c
+         [[LovenseBluetoothManager shared] sendCommandWithToyId:toy.identifier andCommandType:COMMAND_VIBRATE andParamDict:@{kSendCommandParamKey_VibrateLevel:@(20)}];
+```
+
+
+
+ */
 
 ------------
 
 
 ### - ** Send command to the toy**
 
-`OrderTypeVibrate`
+`COMMAND_VIBRATE`
 `-Vibrate the toy .The parameter must be between 0 and 20!`
 
-`OrderTypeRotate`
+`COMMAND_ROTATE`
 `-Rotate the toy .The parameter must be between 0 and 20!`
 
-`OrderTypeRotateClockwise`
+`COMMAND_ROTATE_CLOCKWISE`
 `-Rotate clockwise .The parameter must be between 0 and 20!`
 
-`OrderTypeRotateAntiClockwise`
+`COMMAND_ROTATE_ANTI_CLOCKWISE`
 `-Rotate anti-clockwise .The parameter must be between 0 and 20!`
 
-`OrderTypeRotateChange`
+`COMMAND_ROTATE_CHANGE`
 `-Change the rotation direction`
 
-`OrderTypeAirIn`
-`-Pump in air .The parameter can be 1,2 or 3`
+`COMMAND_VIBRATE1`
+`-Activate the first vibrator at level n .The parameter must be between 0 and 20!`
 
-`OrderTypeAirOut`
-`-Release the air .The parameter can be 1,2 or 3`
+`COMMAND_VIBRATE2`
+`-Activate the second vibrator at level n .The parameter must be between 0 and 20!`
 
-`OrderTypeAirAuto`
-`-循环充气n秒，放气n秒，0代表停止`
+`COMMAND_VIBRATE_FLASH`
+`-Vibrate the toy at level n, and flash the light at the same time .The parameter must be between 0 and 20!`
 
-`OrderTypeVibrate1`
-`-第一个震动马达以n档位震动`
+`COMMAND_FLASH`
+`-Flash the light 3 times`
 
-`OrderTypeVibrate2`
-`-第二个震动马达以n档位震动`
+`COMMAND_LIGHT_OFF`
+`-Turn off the light (saved permanently)`
 
-`OrderTypeVibrateAndFlash`
-`-以某个档位震动，并且按指定频率闪灯`
+`COMMAND_LIGHT_ON`
+`-Turn on the light (saved permanently)`
 
-`OrderTypeSetButtonClickOneLevel`
-`-设置按第一下按钮的震动级别的强度.The parameter must be between 0 and 20!`
+`COMMAND_GET_LIGHT_STATUS`
+`-Get the light status (1: on, 0:off)`
 
-`OrderTypeSetButtonClickTwoLevel`
-`-设置按第二下按钮的震动级别的强度.The parameter must be between 0 and 20!`
+`COMMAND_ALIGHT_OFF`
+`-Turn off the AID light (saved permanently)`
 
-`OrderTypeSetButtonClickThreeLevel`
-`-设置按第三下按钮的震动级别的强度.The parameter must be between 0 and 20!`
+`COMMAND_ALIGHT_ON`
+`-Turn on the AID light (saved permanently)`
 
-`OrderTypeGetFirstThreeButtonLevel`
-`-返回前三个按钮的震动强度`
+`COMMAND_GET_ALIGHT_STATUS`
+`-Get the AID light status (1: on, 0:off)`
 
-`OrderTypeFlash`
-`-指示灯快速闪三下，然后恢复到之前状态`
-
-`OrderTypeLightOff`
-`-关闭指示灯，掉电保存`
-
-`OrderTypeLightOn`
-`-打开指示灯，掉电保存`
-
-`OrderTypeGetLightStatus`
-`-获取指示灯状态 1：开；0：关。`
-
-`OrderTypeAidLightOff`
-`-关闭辅助灯,掉电保存`
-
-`OrderTypeAidLightOn`
-`-打开辅助灯,掉电保存`
-
-`OrderTypeGetAidLightStatus`
-`-获取辅助灯状态 1：开；0：关。`
-
-`OrderTypeBattery`
+`COMMAND_BATTERY`
 `-Get battery status`
 
-`OrderTypeDeviceType`
-`-Get device information`
+`COMMAND_DEVICE_TYPE`
+`-Get device/toy information`
 
+`COMMAND_START_MOVE`
+`-Start tracking the toy movement (0-4)`
 
-`OrderTypeStartListenMove`
-`-开始监听震动广播 ,震动回调 0-4`
-
-`OrderTypeStopListenMove`
-`-结束监听震动广播，震动回调 0-4`
-
-`OrderTypeSaveProgram`
-`-保存编程`
-
-`OrderTypeGetAllExistedProgramButton`
-`-获取所有已存在的编程按钮序号`
+`COMMAND_STOP_MOVE`
+`-Stop tracking the toy movement`
 
 
 
@@ -238,45 +219,41 @@ SDK有三个头文件，分别有以下用途
 ### - ** Callback**
 
 `kToyScanSuccessNotification`
-`-扫描到玩具成功回调`
+`- Found toys`
 
 `kToyConnectSuccessNotification`
-`-连接玩具成功回调`
+`-Toy connected`
 
 `kToyConnectFailNotification`
-`-连接玩具失败回调`
+`-Failed to connect a toy`
 
 `kToyConnectBreakNotification`
-`-断开玩具回调`
+`-Disconnect a toy`
 
-`kToySendOrderErrorNotification`
-`-发送指令错误通知`
+`kToySendCommandErrorNotification`
+`-Unknown Command Received`
 
 `kToyCallbackNotificationBattery`
-`-电量回调`
+`-Battery status`
 
 `kToyCallbackNotificationDeviceType`
-`-设备信息回调`
+`-Device information`
 
 `kToyCallbackNotificationGetLightStatus`
-`-指示灯是否开启`
+`-Light indicator`
 
 `kToyCallbackNotificationGetAidLightStatus`
-`-辅助灯是否开启`
+`-AID light indicator`
 
-`kToyCallbackNotificationGetFirstThreeButtonLevel`
-`-返回前三个按钮的震动强度`
 
 `kToyCallbackNotificationListenMove`
-`-监听震动广播`
-
-`kToyCallbackNotificationGetAllExistedProgramButton`
-`- 获取所有已存在的编程按钮序号`
-
-`kToyOrderCallbackNotificationAtSuccess`
-`-命令成功回调`
+`-Toy movement updates`
 
 
-`kToyOrderCallbackNotificationAtError`
-`-命令错误回调`
+`kToyCommandCallbackNotificationAtSuccess`
+`-Command success`
+
+
+`kToyCommandCallbackNotificationAtError`
+`-Command Error`
 
