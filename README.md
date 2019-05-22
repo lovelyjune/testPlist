@@ -4,19 +4,16 @@
 ------------
 
 
-#### 1.0.1 准备工作
-1.把以下文件复制到工程主目录下
+### - ** 1.把以下文件复制到工程主目录下**
 -  LovenseBluetoothSDK.framework
 
-2.添加需要的 framework到工程
+### - ** 2.添加需要的 framework到工程**
 
 ![](https://www.showdoc.cc/server/api/common/visitfile/sign/8d09f12716dceb90b3ced5223ad1b3aa?showdoc=.jpg)
 
-3.配置环境:
+### - ** 3.配置环境**
 TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以上版本
 
-
-------------
 
 ### - ** 4.Connect Lovense Toys**
 
