@@ -166,7 +166,7 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 ### - ** Notification list**
 
 `kToyScanSuccessNotification`
-`- Found toys`
+`- Found toy list`
 
 `kToyConnectSuccessNotification`
 `-Toy connected`
