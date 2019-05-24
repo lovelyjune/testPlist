@@ -235,7 +235,7 @@ SDK有三个头文件，分别有以下用途
 //MAC address
 @property(nonatomic,copy)NSString * macAddress;
 
-///visibility to Bluetooth search
+///Bluetooth search status
 @property(nonatomic,assign)BOOL isFound;
 
 ///Toy connection status
