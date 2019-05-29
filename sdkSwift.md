@@ -1,8 +1,8 @@
 #### SWIFT
 ### 4.Connect Lovense Toys
 
-- 建立YourProjectName-Bridging-Header.h 
-- 导入 LovenseBluetoothManager 
+- Create YourProjectName-Bridging-Header.h 
+- Import LovenseBluetoothManager 
 
 ```objective-c
 #import <LovenseBluetoothSDK/LovenseBluetoothManager.h>
@@ -14,7 +14,7 @@
     LovenseBluetoothManager.shared().setDeveloperToken("token")
 ```
 
--  add scan success notification
+-  Add a scan success notification
 ```objective-c
 NotificationCenter.default.addObserver(self, selector: #selector(scanSuccessCallback), name: NSNotification.Name(rawValue: kToyScanSuccessNotification), object: nil)     //Scanning toy success notification
  @objc func scanSuccessCallback(nofi : Notification){
@@ -23,7 +23,7 @@ NotificationCenter.default.addObserver(self, selector: #selector(scanSuccessCall
     }
 ```
 
--  add connect success notification
+-  Add a connect success notification
 ```objective-c
 NotificationCenter.default.addObserver(self, selector: #selector(connectSuccessCallback), name: NSNotification.Name(rawValue: kToyConnectSuccessNotification), object: nil)     //Connected toy successfully notification
 @objc func connectSuccessCallback(nofi : Notification){
