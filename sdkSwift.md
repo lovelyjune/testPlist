@@ -2,7 +2,7 @@
 ### 4.Connect Lovense Toys
 
 - Create YourProjectName-Bridging-Header.h 
-- Import LovenseBluetoothManager 
+- Import Lovense 
 
 ```objective-c
 #import <Lovense/Lovense.h>
@@ -35,7 +35,7 @@ NotificationCenter.default.addObserver(self, selector: #selector(connectSuccessC
 -  Search the toys over Bluetooth
 
 ```objective-c
-    LovenseBluetoothManager.shared().setDeveloperToken("token")
+    Lovense.shared().setDeveloperToken("token")
 ```
 
 
