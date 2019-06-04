@@ -5,11 +5,12 @@
 
 
 ###  1.把以下文件复制到工程主目录下
--  LovenseBluetoothSDK.framework
+-  Lovense.framework
 
 ###  2.添加需要的 framework到工程
 
-![](https://www.showdoc.cc/server/api/common/visitfile/sign/8d09f12716dceb90b3ced5223ad1b3aa?showdoc=.jpg)
+![](https://www.showdoc.cc/server/api/common/visitfile/sign/c46d11f60964378370329d7212a53b9c?showdoc=.jpg)
+
 
 ###   3.配置环境
 TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以上版本
@@ -18,7 +19,7 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 ### 4.Connect Lovense Toys
 
 
-- 导入 LovenseBluetoothManager 
+- 导入 Lovense 
 
 ```objective-c
 #import <Lovense/Lovense.h>
