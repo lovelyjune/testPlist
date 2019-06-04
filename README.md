@@ -21,13 +21,13 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 - 导入 LovenseBluetoothManager 
 
 ```objective-c
-#import <LovenseBluetoothSDK/LovenseBluetoothManager.h>
+#import <Lovense/Lovense.h>
 ```
 
 -   Pass your token into Lovense framework
 
 ```objective-c
-    [[LovenseBluetoothManager shared] setDeveloperToken:@"Your token"];
+    [[Lovense shared] setDeveloperToken:@"Your token"];
 ```
 
 -  add scan success notification
@@ -36,7 +36,7 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 -(void)scanSuccessCallback:(NSNotification *)noti
 {
     NSDictionary * dict = [noti object];
-    NSArray <LovenseToy*> * scanToyArr = [dict objectForKey:@"scanToyArray"];
+    NSArray <LovenseToy*> * toys = [dict objectForKey:@"scanToyArray"];
 }
 ```
 
@@ -54,27 +54,27 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 -  Search the toys over Bluetooth
 
 ```objective-c
-    [[LovenseBluetoothManager shared] searchToysWithIsAutoConnect:YES];
+    [[Lovense shared] connectToy:toyId];
 ```
 
 
 -  Save the toys
 
 ```objective-c
-    [[LovenseBluetoothManager shared] saveToyList:self.allToyModelArr];
+    [[Lovense shared] saveToys:toys];
 ```
 
 -  Retrieve the saved toys
 
 ```objective-c
-        NSArray<LovenseToy*> * toyList = [[LovenseBluetoothManager shared] getSavedToyList];
+        NSArray<LovenseToy*> * listToys = [[Lovense shared] listToys];
 
 ```
 
 -   Connect the toy
 
 ```objective-c
-        [[LovenseBluetoothManager shared] connectToy:self.currentToy.identifier];
+        [[Lovense shared] connectToy:toyId];
 
 ```
 
@@ -82,14 +82,14 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 -   Disconnect the  toy
 
 ```objective-c
-         [[LovenseBluetoothManager shared] disconnectToy:self.currentToy.identifier];
+         [[Lovense shared] disconnectToy:toyId];
 
 ```
 
 -    Send a command to the toy
 
 ```objective-c
-         [[LovenseBluetoothManager shared] sendCommandWithToyId:toy.identifier andCommandType:COMMAND_VIBRATE andParamDict:@{kSendCommandParamKey_VibrateLevel:@(20)}];
+         [[LovenseBluetoothManager shared] sendCommandWithToyId:toyId andCommandType:COMMAND_VIBRATE andParamDict:@{kSendCommandParamKey_VibrateLevel:@(20)}];
 ```
 
 
