@@ -9,7 +9,7 @@
 
 ###  2.添加需要的 framework到工程
 
-![](https://www.showdoc.cc/server/api/common/visitfile/sign/c46d11f60964378370329d7212a53b9c?showdoc=.jpg)
+![](https://www.showdoc.cc/server/api/common/visitfile/sign/bdcdfa455f940c37184f78811d09c777?showdoc=.jpg)
 
 
 ###   3.配置环境
