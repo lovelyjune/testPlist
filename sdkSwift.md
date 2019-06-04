@@ -18,8 +18,8 @@
 ```objective-c
 NotificationCenter.default.addObserver(self, selector: #selector(scanSuccessCallback), name: NSNotification.Name(rawValue: kToyScanSuccessNotification), object: nil)     //Scanning toy success notification
  @objc func scanSuccessCallback(nofi : Notification){
-        let dict = nofi.object as? [String : Any]
-        let scanToyArr = dict?["scanToyArray"] as? [LovenseToy]
+        let dict = nofi.object as? [String : LovenseToy]
+        let scanToyArr = dict?["scanToyArray"]
     }
 ```
 
