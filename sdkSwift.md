@@ -27,8 +27,8 @@ NotificationCenter.default.addObserver(self, selector: #selector(scanSuccessCall
 ```objective-c
 NotificationCenter.default.addObserver(self, selector: #selector(connectSuccessCallback), name: NSNotification.Name(rawValue: kToyConnectSuccessNotification), object: nil)     //Connected toy successfully notification
 @objc func connectSuccessCallback(nofi : Notification){
-        let dict = nofi.object as? [String : Any]
-        let toy = dict?["toy"] as? LovenseToy
+        let dict = nofi.object as? [String : LovenseToy]
+        let toy = dict?["toy"] 
     }
 ```
 
