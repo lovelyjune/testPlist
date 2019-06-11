@@ -90,7 +90,7 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 -    Send a command to the toy
 
 ```objective-c
-         [[LovenseBluetoothManager shared] sendCommandWithToyId:toyId andCommandType:COMMAND_VIBRATE andParamDict:@{kSendCommandParamKey_VibrateLevel:@(20)}];
+         [[Lovense shared] sendCommandWithToyId:toyId andCommandType:COMMAND_VIBRATE andParamDict:@{kSendCommandParamKey_VibrateLevel:@(20)}];
 ```
 
 
