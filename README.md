@@ -211,7 +211,7 @@ TARGETS -> General -> Deployment Info -> Deployment Target -> 设置8.0或者以
 ####  SDK简述
 
 SDK有三个头文件，分别有以下用途
-##### - LovenseBluetoothDefine.h
+##### - LovenseDefine.h
 1. 记录所有控制玩具命令的枚举（如震动指令OrderTypeVibrate）
 2. 记录所有命令参数的KEY（如震动参数kSendOrderParamKey_VibrateLevel）
 3. 记录所有命令回调（如扫描玩具成功回调kToyScanSuccessNotification）
@@ -249,7 +249,7 @@ SDK有三个头文件，分别有以下用途
 @property(nonatomic,assign)int battery;
 ```
 
-##### - LovenseBluetoothManager.h
+##### - Lovense.h
 主要控制玩具的实现类（如扫描玩具，连接玩具，发送命令到玩具等）
 
 
